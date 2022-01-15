@@ -1,48 +1,47 @@
-# Svelte + TS + Vite
+# Password Peeper
 
-This template should help get you started developing with Svelte and TypeScript in Vite.
+## Introduction
 
-## Recommended IDE Setup
+Password Peeper is a simple chrome extension that enables users to have a peep of their forgotten passwords or copy the passwords to clipboard without any effort.
 
-[VSCode](https://code.visualstudio.com/) + [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode).
+I let browser remember some of my passwords so that it can auto-fill my password during authentication. When I forget my password, I also try to find it in the browser.
 
-## Need an official Svelte framework?
+I had 2 options
 
-Check out [SvelteKit](https://github.com/sveltejs/kit#readme), which is also powered by Vite. Deploy anywhere with its serverless-first approach and adapt to various platforms, with out of the box support for TypeScript, SCSS, and Less, and easily-added support for mdsvex, GraphQL, PostCSS, Tailwind CSS, and more.
+1. Go the **Settings** -> **Passwords** and search for the website domain.
+2. Use developer tool to locate the password input DOM element, copy its JS path, paste the path into console and append `.value` to the JS path to read the password.
 
-## Technical considerations
+These 2 methods works but is too time consuming.
 
-**Why use this over SvelteKit?**
+That's why I decieded to make this **Password Peeper** chrome extension to make the process seamless. One can simply hover over the password to view its value, show all passwords on a website automatically, or with a keyboard shortcut.
 
-- It brings its own routing solution which might not be preferable for some users.
-- It is first and foremost a framework that just happens to use Vite under the hood, not a Vite app.
-  `vite dev` and `vite build` wouldn't work in a SvelteKit environment, for example.
+## Bookmark Method
 
-This template contains as little as possible to get started with Vite + TypeScript + Svelte, while taking into account the developer experience with regards to HMR and intellisense. It demonstrates capabilities on par with the other `create-vite` templates and is a good starting point for beginners dipping their toes into a Vite + Svelte project.
+Another much simpler solution is bookmark. In Chrome, bookmarks can run JavaScript.
 
-Should you later need the extended capabilities and extensibility provided by SvelteKit, the template has been structured similarly to SvelteKit so that it is easy to migrate.
+Add the following code to an empty bookmark's url.
 
-**Why `global.d.ts` instead of `compilerOptions.types` inside `jsconfig.json` or `tsconfig.json`?**
-
-Setting `compilerOptions.types` shuts out all other types not explicitly listed in the configuration. Using triple-slash references keeps the default TypeScript setting of accepting type information from the entire workspace, while also adding `svelte` and `vite/client` type information.
-
-**Why include `.vscode/extensions.json`?**
-
-Other templates indirectly recommend extensions via the README, but this file allows VS Code to prompt the user to install the recommended extension upon opening the project.
-
-**Why enable `allowJs` in the TS template?**
-
-While `allowJs: false` would indeed prevent the use of `.js` files in the project, it does not prevent the use of JavaScript syntax in `.svelte` files. In addition, it would force `checkJs: false`, bringing the worst of both worlds: not being able to guarantee the entire codebase is TypeScript, and also having worse typechecking for the existing JavaScript. In addition, there are valid use cases in which a mixed codebase may be relevant.
-
-**Why is HMR not preserving my local component state?**
-
-HMR state preservation comes with a number of gotchas! It has been disabled by default in both `svelte-hmr` and `@sveltejs/vite-plugin-svelte` due to its often surprising behavior. You can read the details [here](https://github.com/rixo/svelte-hmr#svelte-hmr).
-
-If you have state that's important to retain within a component, consider creating an external store which would not be replaced by HMR.
-
-```ts
-// store.ts
-// An extremely simple external store
-import { writable } from 'svelte/store'
-export default writable(0)
+```js
+javascript: document.querySelectorAll("input[type='password']").forEach((ele) => {
+  ele.setAttribute('type', 'text');
+});
 ```
+
+By clicking on the bookmark, all passwords on a page will be displayed in text. It's already super easy to use.
+
+The extension **Password Peeper** provides more features, such as,
+
+1. Auto show passwords when page is loaded
+2. Copy to clipboard on double click
+3. Show password on hover (manually trigger or automatically trigger)
+
+## Development
+
+The UI is written with Svelte and Svelte Material UI and TypeScript.
+
+The content and background scripts are located in `dist` as JavaScript files. TypeScript is not used for them simply because I am lazy and this extension is quite simple.
+
+- `npm i` to install the dependencies.
+- `npm run dev` to run development server,
+- `npm run build` to build the UI into `dist/ui`.
+- `npm run prepare` when a new `@smui` package is installed to update the theme files.
