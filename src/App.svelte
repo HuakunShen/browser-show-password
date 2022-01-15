@@ -2,7 +2,12 @@
   import ModeSelector from './lib/ModeSelector.svelte';
   import AutoModeCheckbox from './lib/AutoModeCheckbox.svelte';
   import CopyOnDoubleClickCheckbox from './lib/CopyOnDoubleClickCheckbox.svelte';
+  import Instructions from './lib/Instructions.svelte';
+  import Tab, { Label } from '@smui/tab';
+  import TabBar from '@smui/tab-bar';
   import { onMount } from 'svelte';
+
+  let active = 'Home';
 
   const sendCmd = (cmd) => {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
@@ -19,9 +24,21 @@
 
 <main>
   <h1>Password Peeper</h1>
-  <ModeSelector />
-  <AutoModeCheckbox />
-  <CopyOnDoubleClickCheckbox />
+  <TabBar tabs={['Home', 'Instructions']} let:tab bind:active>
+    <Tab {tab}>
+      <Label>{tab}</Label>
+    </Tab>
+  </TabBar>
+
+  {#if active === 'Home'}
+    <ModeSelector />
+    <AutoModeCheckbox />
+    <CopyOnDoubleClickCheckbox />
+  {:else if active === 'Instructions'}
+    <Instructions />
+  {:else}
+    <h2>Unexpected Page</h2>
+  {/if}
 </main>
 
 <style>
@@ -34,7 +51,9 @@
     text-align: center;
     padding: 1em;
     min-width: 30rem;
+    max-width: 0rem;
     margin: 0 auto;
+    padding-bottom: 5rem;
   }
 
   h1 {

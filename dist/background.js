@@ -14,8 +14,20 @@ chrome.runtime.onInstalled.addListener((details) => {
 chrome.runtime.onMessage.addListener((req, sender, sendRes) => {
   const { cmd, title, message, type } = req;
   if (cmd === 'notification') {
-    chrome.notifications.create({ title, message, type, iconUrl: 'icons/svelte.png' }, (res) => {
+    chrome.notifications.create({ title, message, type, iconUrl: 'icons/logo.png' }, (res) => {
       console.log(res);
     });
+  }
+});
+
+const sendCmd = (cmd) => {
+  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+    chrome.tabs.sendMessage(tabs[0].id, { cmd });
+  });
+};
+
+chrome.commands.onCommand.addListener((command) => {
+  if (command === 'toggle-password') {
+    sendCmd('Toggle Display Password');
   }
 });

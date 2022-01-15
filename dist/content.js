@@ -44,7 +44,6 @@ const hideAllPassword = () => {
 const doubleClickHandler = (event) => {
   const content = event.target.value;
   navigator.clipboard.writeText(content);
-  console.log('Copy to Clipboard');
   chrome.runtime.sendMessage({
     cmd: 'notification',
     title: 'Password Peeper',
@@ -67,6 +66,15 @@ const removeCopyOnDoubleClick = () => {
   });
 };
 
+const togglePasswordDisplay = () => {
+  const passwordInput = document.querySelector("input[origtype='password']");
+  if (passwordInput.getAttribute('type') === 'password') {
+    showAllPassword();
+  } else {
+    hideAllPassword();
+  }
+};
+
 const handleRequest = (cmd) => {
   init();
   switch (cmd) {
@@ -77,12 +85,14 @@ const handleRequest = (cmd) => {
       undoRevealOnHover();
       break;
     case 'Display Directly':
-      console.log('Display Directly');
       undoRevealOnHover();
       showAllPassword();
       break;
     case 'Hide Password':
       hideAllPassword();
+      break;
+    case 'Toggle Display Password':
+      togglePasswordDisplay();
       break;
     case 'Disable':
       undoRevealOnHover();

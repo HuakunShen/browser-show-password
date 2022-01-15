@@ -28,6 +28,6 @@
       <Checkbox on:click={checkboxUpdate} bind:checked={copyOnDoubleClick} touch />
       <span slot="label" tabindex="0">Copy On Double Click</span>
     </FormField>
-    <Tooltip yPos="above" unbounded>Copy Password On Double Click</Tooltip>
+    <Tooltip unbounded>Copy Password On Double Click</Tooltip>
   </Wrapper>
 </FormField>

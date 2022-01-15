@@ -17,6 +17,8 @@
     "@smui/checkbox": "^6.0.0-beta.13",
     "@smui/form-field": "^6.0.0-beta.13",
     "@smui/radio": "^6.0.0-beta.13",
+    "@smui/tab": "^6.0.0-beta.13",
+    "@smui/tab-bar": "^6.0.0-beta.13",
     "@smui/tooltip": "^6.0.0-beta.13",
     "@sveltejs/vite-plugin-svelte": "^1.0.0-next.30",
     "@tsconfig/svelte": "^2.0.1",

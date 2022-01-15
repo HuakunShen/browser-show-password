@@ -23,6 +23,6 @@
       <Checkbox on:click={checkboxUpdate} bind:checked={autoMode} touch />
       <span slot="label" tabindex="0">Auto Mode</span>
     </FormField>
-    <Tooltip yPos="above" unbounded>Attempt to Trigger Automatically</Tooltip>
+    <Tooltip unbounded>Attempt to Trigger Automatically</Tooltip>
   </Wrapper>
 </FormField>
