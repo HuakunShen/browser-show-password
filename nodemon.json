@@ -1,0 +1,5 @@
+{
+  "watch": ["./**/*.ts", "./**/*.js", "./**/*.svelte"],
+  "ignore": ["**/*.spec.ts", "dist"],
+  "exec": "npm run build"
+}

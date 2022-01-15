@@ -6,6 +6,7 @@
     "dev": "vite",
     "build": "vite build --base=ui",
     "preview": "vite preview",
+    "check": "svelte-check --tsconfig ./tsconfig.json",
     "prepare": "npm run smui-theme-light && npm run smui-theme-dark",
     "smui-theme-light": "smui-theme compile static/smui.css -i src/theme",
     "smui-theme-dark": "smui-theme compile static/smui-dark.css -i src/theme/dark"
@@ -13,9 +14,19 @@
   "devDependencies": {
     "@smui/button": "^6.0.0-beta.13",
     "@smui/card": "^6.0.0-beta.13",
+    "@smui/checkbox": "^6.0.0-beta.13",
+    "@smui/form-field": "^6.0.0-beta.13",
+    "@smui/radio": "^6.0.0-beta.13",
+    "@smui/tooltip": "^6.0.0-beta.13",
     "@sveltejs/vite-plugin-svelte": "^1.0.0-next.30",
+    "@tsconfig/svelte": "^2.0.1",
+    "@types/chrome": "^0.0.176",
     "smui-theme": "^6.0.0-beta.13",
     "svelte": "^3.44.0",
+    "svelte-check": "^2.2.7",
+    "svelte-preprocess": "^4.9.8",
+    "tslib": "^2.3.1",
+    "typescript": "^4.4.4",
     "vite": "^2.7.2"
   }
 }

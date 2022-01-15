@@ -1,0 +1,65 @@
+<script lang="ts">
+  import Radio from '@smui/radio';
+  import FormField from '@smui/form-field';
+  import { onMount } from 'svelte';
+
+  const DISABLE = 'Disable';
+  const defaultMode = DISABLE;
+  let ignoreFirstUpdateCount = 0;
+  let options = [
+    { name: DISABLE, disabled: false },
+    { name: 'Mouse Over', disabled: false },
+    { name: 'Display Directly', disabled: false },
+  ];
+  let mode = defaultMode;
+
+  const sendCmd = (cmd) => {
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+      chrome.tabs.sendMessage(tabs[0].id, { cmd });
+    });
+  };
+
+  // Init
+  onMount(() => {
+    chrome?.storage?.sync?.get(['mode', 'autoMode'], (result) => {
+      console.log(`mode init mode: ${result.mode}`);
+      console.log(`mode init autoMode: ${result.autoMode}`);
+      mode = result.mode == undefined ? defaultMode : result.mode;
+    });
+  });
+
+  // Methods
+  const modeChanged = () => {
+    console.log(`modeChanged ${mode}`);
+    if (ignoreFirstUpdateCount === 0) {
+      ignoreFirstUpdateCount += 1;
+      return;
+    }
+    chrome?.storage?.sync?.set({ mode }).then(() => {
+      chrome?.storage?.sync?.get(['mode', 'autoMode'], (result) => {
+        console.log(`Updated Mode to: ${result.mode}`);
+      });
+      sendCmd(mode);
+    });
+  };
+
+  // Watch
+  $: mode, modeChanged();
+</script>
+
+<div class="radio-demo">
+  {#each options as option}
+    <FormField>
+      <Radio bind:group={mode} value={option.name} disabled={option.disabled} />
+      <span slot="label">
+        {option.name}{option.disabled ? ' (disabled)' : ''}
+      </span>
+    </FormField>
+  {/each}
+</div>
+
+<style>
+  .radio-demo > :global(*) {
+    margin: 0 0.2em;
+  }
+</style>

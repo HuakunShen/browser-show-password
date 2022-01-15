@@ -8,7 +8,7 @@ const init = () => {
 const showTextOnHover = (event) => event.target.setAttribute('type', 'text');
 const showPasswordOnMouseOut = (event) => event.target.setAttribute('type', 'password');
 
-const revealOnHover = () => {
+const revealOnMouseOver = () => {
   const passwordInputs = document.querySelectorAll("input[origtype='password']");
   passwordInputs.forEach((ele) => {
     ele.addEventListener('mouseover', showTextOnHover);
@@ -31,19 +31,47 @@ const showAllPassword = () => {
   });
 };
 
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  switch (request.cmd) {
-    case 'revealOnHover':
+const hideAllPassword = () => {
+  const passwordInputs = document.querySelectorAll("input[origtype='password']");
+  passwordInputs.forEach((ele) => {
+    ele.setAttribute('type', 'password');
+  });
+};
+
+const handleRequest = (cmd) => {
+  switch (cmd) {
+    case 'Mouse Over':
       init();
-      revealOnHover();
+      revealOnMouseOver();
       break;
     case 'undoRevealOnHover':
       init();
       undoRevealOnHover();
       break;
-    case 'showAllPassword':
+    case 'Display Directly':
+      console.log('Display Directly');
       init();
+      undoRevealOnHover();
       showAllPassword();
       break;
+    case 'Hide Password':
+      init();
+      hideAllPassword();
+      break;
+    case 'Disable':
+      console.log('Disable');
+      undoRevealOnHover();
+      hideAllPassword();
+      break;
   }
+};
+
+chrome.storage.sync.get(['mode', 'autoMode'], ({ mode, autoMode }) => {
+  if (autoMode) {
+    handleRequest(mode);
+  }
+});
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  handleRequest(request.cmd);
 });
