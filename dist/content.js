@@ -3,11 +3,6 @@ const init = () => {
   inputEles.forEach((ele) => {
     ele.setAttribute('origtype', ele.getAttribute('type'));
   });
-
-  const inputEles = document.querySelectorAll("input[type='password']");
-  inputEles.forEach((ele) => {
-    ele.setAttribute('origtype', ele.getAttribute('type'));
-  });
 };
 
 const showTextOnHover = (event) => event.target.setAttribute('type', 'text');

@@ -1,23 +1,21 @@
 {
-  "name": "svelte-app",
-  "version": "1.0.0",
-  "private": true,
+  "name": "vite-project",
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
-    "build": "rollup -c",
-    "dev": "rollup -c -w",
-    "start": "sirv public --no-clear"
+    "dev": "vite",
+    "build": "vite build --base=ui",
+    "preview": "vite preview",
+    "prepare": "npm run smui-theme-light && npm run smui-theme-dark",
+    "smui-theme-light": "smui-theme compile static/smui.css -i src/theme",
+    "smui-theme-dark": "smui-theme compile static/smui-dark.css -i src/theme/dark"
   },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^17.0.0",
-    "@rollup/plugin-node-resolve": "^11.0.0",
-    "rollup": "^2.3.4",
-    "rollup-plugin-css-only": "^3.1.0",
-    "rollup-plugin-livereload": "^2.0.0",
-    "rollup-plugin-svelte": "^7.0.0",
-    "rollup-plugin-terser": "^7.0.0",
-    "svelte": "^3.0.0"
-  },
-  "dependencies": {
-    "sirv-cli": "^2.0.0"
+    "@smui/button": "^6.0.0-beta.13",
+    "@smui/card": "^6.0.0-beta.13",
+    "@sveltejs/vite-plugin-svelte": "^1.0.0-next.30",
+    "smui-theme": "^6.0.0-beta.13",
+    "svelte": "^3.44.0",
+    "vite": "^2.7.2"
   }
 }
