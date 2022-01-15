@@ -1,5 +1,7 @@
 # Password Peeper
 
+<img src="images/scrrenshot.png" width="60%"/>
+
 ## Introduction
 
 Password Peeper is a simple chrome extension that enables users to have a peep of their forgotten passwords or copy the passwords to clipboard without any effort.

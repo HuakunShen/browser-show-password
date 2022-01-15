@@ -1,5 +1,5 @@
 {
-  "name": "Show Password",
+  "name": "Password Peeper",
   "description": "Show your password on the web page filled in by browser. Double click to copy your password to clipboard in case you forgot it.",
   "version": "1.0",
   "manifest_version": 3,
