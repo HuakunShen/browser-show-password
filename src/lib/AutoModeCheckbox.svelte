@@ -7,14 +7,12 @@
 
   onMount(() => {
     chrome?.storage?.sync?.get(['autoMode', 'mode'], (result) => {
-      console.log(`autoMode init: ${result.autoMode}`);
       autoMode = result.autoMode == null ? false : result.autoMode;
     });
   });
 
   const checkboxUpdate = () => {
     autoMode = !autoMode;
-    console.log(`autoMode: ${autoMode}`);
     chrome?.storage?.sync?.set({ autoMode });
   };
 </script>

@@ -10,3 +10,12 @@ chrome.runtime.onInstalled.addListener((details) => {
     });
   }
 });
+
+chrome.runtime.onMessage.addListener((req, sender, sendRes) => {
+  const { cmd, title, message, type } = req;
+  if (cmd === 'notification') {
+    chrome.notifications.create({ title, message, type, iconUrl: 'icons/svelte.png' }, (res) => {
+      console.log(res);
+    });
+  }
+});

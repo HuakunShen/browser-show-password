@@ -17,23 +17,18 @@
   // Init
   onMount(() => {
     chrome?.storage?.sync?.get(['mode', 'autoMode'], (result) => {
-      console.log(`mode init mode: ${result.mode}`);
-      console.log(`mode init autoMode: ${result.autoMode}`);
       mode = result.mode == undefined ? defaultMode : result.mode;
     });
   });
 
   // Methods
   const modeChanged = () => {
-    console.log(`modeChanged ${mode}`);
     if (ignoreFirstUpdateCount === 0) {
       ignoreFirstUpdateCount += 1;
       return;
     }
     chrome?.storage?.sync?.set({ mode }).then(() => {
-      chrome?.storage?.sync?.get(['mode', 'autoMode'], (result) => {
-        console.log(`Updated Mode to: ${result.mode}`);
-      });
+      chrome?.storage?.sync?.get(['mode', 'autoMode'], (result) => {});
       sendCmd(mode);
     });
   };

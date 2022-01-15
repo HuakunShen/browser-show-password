@@ -8,14 +8,12 @@
 
   onMount(() => {
     chrome?.storage?.sync?.get(['copyOnDoubleClick'], (result) => {
-      console.log(`copyOnDoubleClick init: ${result.copyOnDoubleClick}`);
       copyOnDoubleClick = result.copyOnDoubleClick == null ? false : result.copyOnDoubleClick;
     });
   });
 
   const checkboxUpdate = () => {
     copyOnDoubleClick = !copyOnDoubleClick;
-    console.log(`copyOnDoubleClick: ${copyOnDoubleClick}`);
     chrome?.storage?.sync?.set({ copyOnDoubleClick }).then(() => {
       sendCmd(copyOnDoubleClick ? 'copyOnDoubleClick' : 'disableCopyOnDoubleClick');
     });

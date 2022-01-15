@@ -11,9 +11,7 @@
   };
 
   onMount(() => {
-    console.log('Password Peeper Mounted');
     chrome?.storage?.sync?.get(['autoMode', 'mode'], (result) => {
-      console.log(`autoMode init: ${result.autoMode}`);
       sendCmd(result.mode);
     });
   });

@@ -45,6 +45,12 @@ const doubleClickHandler = (event) => {
   const content = event.target.value;
   navigator.clipboard.writeText(content);
   console.log('Copy to Clipboard');
+  chrome.runtime.sendMessage({
+    cmd: 'notification',
+    title: 'Password Peeper',
+    message: 'Password Copied to Your Clipboard',
+    type: 'basic',
+  });
 };
 
 const addCopyOnDoubleClick = () => {
@@ -102,3 +108,10 @@ chrome.storage.sync.get(
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   handleRequest(request.cmd);
 });
+
+// setTimeout(() => {
+//   const btn = document.createElement('button');
+//   btn.style.position = 'fixed';
+//   btn.innerText = 'Copied to Clipboard';
+//   document.body.appendChild(btn);
+// }, 2000);
