@@ -1,6 +1,7 @@
 <script lang="ts">
   import ModeSelector from './lib/ModeSelector.svelte';
   import AutoModeCheckbox from './lib/AutoModeCheckbox.svelte';
+  import CopyOnDoubleClickCheckbox from './lib/CopyOnDoubleClickCheckbox.svelte';
   import { onMount } from 'svelte';
 
   const sendCmd = (cmd) => {
@@ -22,6 +23,7 @@
   <h1>Password Peeper</h1>
   <ModeSelector />
   <AutoModeCheckbox />
+  <CopyOnDoubleClickCheckbox />
 </main>
 
 <style>

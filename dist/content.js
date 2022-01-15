@@ -5,7 +5,10 @@ const init = () => {
   });
 };
 
-const showTextOnHover = (event) => event.target.setAttribute('type', 'text');
+const showTextOnHover = (event) => {
+  event.target.click();
+  event.target.setAttribute('type', 'text');
+};
 const showPasswordOnMouseOut = (event) => event.target.setAttribute('type', 'password');
 
 const revealOnMouseOver = () => {
@@ -38,39 +41,63 @@ const hideAllPassword = () => {
   });
 };
 
+const doubleClickHandler = (event) => {
+  const content = event.target.value;
+  navigator.clipboard.writeText(content);
+  console.log('Copy to Clipboard');
+};
+
+const addCopyOnDoubleClick = () => {
+  const passwordInputs = document.querySelectorAll("input[origtype='password']");
+  passwordInputs.forEach((ele) => {
+    ele.addEventListener('dblclick', doubleClickHandler);
+  });
+};
+
+const removeCopyOnDoubleClick = () => {
+  const passwordInputs = document.querySelectorAll("input[origtype='password']");
+  passwordInputs.forEach((ele) => {
+    ele.removeEventListener('dblclick', doubleClickHandler);
+  });
+};
+
 const handleRequest = (cmd) => {
+  init();
   switch (cmd) {
     case 'Mouse Over':
-      init();
       revealOnMouseOver();
       break;
     case 'undoRevealOnHover':
-      init();
       undoRevealOnHover();
       break;
     case 'Display Directly':
       console.log('Display Directly');
-      init();
       undoRevealOnHover();
       showAllPassword();
       break;
     case 'Hide Password':
-      init();
       hideAllPassword();
       break;
     case 'Disable':
-      console.log('Disable');
       undoRevealOnHover();
       hideAllPassword();
+      break;
+    case 'copyOnDoubleClick':
+      addCopyOnDoubleClick();
+      break;
+    case 'disableCopyOnDoubleClick':
+      removeCopyOnDoubleClick();
       break;
   }
 };
 
-chrome.storage.sync.get(['mode', 'autoMode'], ({ mode, autoMode }) => {
-  if (autoMode) {
-    handleRequest(mode);
+chrome.storage.sync.get(
+  ['mode', 'autoMode', 'copyOnDoubleClick'],
+  ({ mode, autoMode, copyOnDoubleClick }) => {
+    if (autoMode) handleRequest(mode);
+    if (copyOnDoubleClick) handleRequest('copyOnDoubleClick');
   }
-});
+);
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   handleRequest(request.cmd);

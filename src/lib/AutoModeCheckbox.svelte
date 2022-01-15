@@ -3,7 +3,6 @@
   import FormField from '@smui/form-field';
   import Tooltip, { Wrapper } from '@smui/tooltip';
   import { onMount } from 'svelte';
-
   let autoMode = false;
 
   onMount(() => {
@@ -18,8 +17,6 @@
     console.log(`autoMode: ${autoMode}`);
     chrome?.storage?.sync?.set({ autoMode });
   };
-
-  //   $: autoMode, checkboxUpdate();
 </script>
 
 <FormField>
@@ -28,6 +25,6 @@
       <Checkbox on:click={checkboxUpdate} bind:checked={autoMode} touch />
       <span slot="label" tabindex="0">Auto Mode</span>
     </FormField>
-    <Tooltip unbounded>Attempt to Trigger Automatically</Tooltip>
+    <Tooltip yPos="above" unbounded>Attempt to Trigger Automatically</Tooltip>
   </Wrapper>
 </FormField>
