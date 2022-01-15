@@ -1,6 +1,6 @@
 {
   "name": "Show Password",
-  "description": "Show Password On Your Web Page",
+  "description": "Show your password on the web page filled in by browser. Double click to copy your password to clipboard in case you forgot it.",
   "version": "1.0",
   "manifest_version": 3,
   "background": {
@@ -32,5 +32,6 @@
       },
       "description": "Toggle Password On Page"
     }
-  }
+  },
+  "icons": { "16": "icons/16.png", "48": "icons/48.png", "128": "icons/128.png" }
 }
